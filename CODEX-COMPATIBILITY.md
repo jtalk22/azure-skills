@@ -8,9 +8,10 @@ The maintained-source repair is submitted as [Microsoft PR #3279](https://github
 
 ## Install and refresh
 
-Use the supported Git marketplace commands:
+When replacing the existing Microsoft marketplace, remove its source registration first. This keeps the plugin configuration but removes the old marketplace snapshot. Then add the repaired source and reinstall:
 
 ```sh
+codex plugin marketplace remove azure-skills
 codex plugin marketplace add jtalk22/azure-skills --ref codex-compatible
 codex plugin add azure@azure-skills
 ```
@@ -28,6 +29,6 @@ The marketplace and plugin retain their existing identities. Start a new Codex t
 
 This branch deliberately does not follow Microsoft's `main` automatically. Before publishing an upstream update here, preserve the phase-document fix, validate every distributed `SKILL.md`, verify phase references resolve, and keep the root `skills/` projection identical to `.github/plugins/azure-skills/skills/`. Update the matching Azure manifest version suffixes before reinstalling. Do not publish an unvalidated upstream sync over this branch.
 
-Once Microsoft's released marketplace includes the fix, switch back using `codex plugin marketplace add microsoft/azure-skills --ref main`, refresh and reinstall, and verify a fresh Codex `skills/list` response has no errors.
+Once Microsoft's released marketplace includes the fix, remove the repaired marketplace registration with `codex plugin marketplace remove azure-skills`, add the official source with `codex plugin marketplace add microsoft/azure-skills --ref main`, then reinstall, and verify a fresh Codex `skills/list` response has no errors.
 
 Reference: [OpenAI plugin marketplace documentation](https://developers.openai.com/plugins/build/plugins#add-a-marketplace-from-the-cli).
