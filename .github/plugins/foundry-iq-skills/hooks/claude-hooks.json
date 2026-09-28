@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/track-telemetry.sh\""
+            "command": "/bin/bash -c 'requested=$1\nselected=\nif [ -f \"$requested/.claude-plugin/plugin.json\" ] && [ -f \"$requested/hooks/scripts/track-telemetry.sh\" ]; then\n  selected=$requested\nelse\n  for candidate in \"${requested%/*}\"/*; do\n    [ -f \"$candidate/.claude-plugin/plugin.json\" ] || continue\n    [ -f \"$candidate/hooks/scripts/track-telemetry.sh\" ] || continue\n    if [ -z \"$selected\" ] || [ \"$candidate/.claude-plugin/plugin.json\" -nt \"$selected/.claude-plugin/plugin.json\" ]; then\n      selected=$candidate\n    fi\n  done\nfi\nif [ -z \"$selected\" ]; then\n  printf '\"'\"'Azure hook: no installed plugin found for %s\\n'\"'\"' \"$requested\" >&2\n  exit 127\nfi\nexec /bin/bash \"$selected/hooks/scripts/track-telemetry.sh\"\n' _ \"${CLAUDE_PLUGIN_ROOT}\""
           }
         ]
       }
@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/track-telemetry.sh\""
+            "command": "/bin/bash -c 'requested=$1\nselected=\nif [ -f \"$requested/.claude-plugin/plugin.json\" ] && [ -f \"$requested/hooks/scripts/track-telemetry.sh\" ]; then\n  selected=$requested\nelse\n  for candidate in \"${requested%/*}\"/*; do\n    [ -f \"$candidate/.claude-plugin/plugin.json\" ] || continue\n    [ -f \"$candidate/hooks/scripts/track-telemetry.sh\" ] || continue\n    if [ -z \"$selected\" ] || [ \"$candidate/.claude-plugin/plugin.json\" -nt \"$selected/.claude-plugin/plugin.json\" ]; then\n      selected=$candidate\n    fi\n  done\nfi\nif [ -z \"$selected\" ]; then\n  printf '\"'\"'Azure hook: no installed plugin found for %s\\n'\"'\"' \"$requested\" >&2\n  exit 127\nfi\nexec /bin/bash \"$selected/hooks/scripts/track-telemetry.sh\"\n' _ \"${CLAUDE_PLUGIN_ROOT}\""
           }
         ]
       }
